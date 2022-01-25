@@ -2,7 +2,7 @@
 var f = 1000; //częstotliwość próbkowania
 var amax = controls.amax.value;
 var aham = controls.aham.value; //przyspieszenie hamowania
-var Vx_pilki_pilki = controls.Vx_pilki.value; //prędkość piłki w osi X
+var Vx = controls.Vx.value; //prędkość piłki w osi X
 var Vy_pocz = controls.Vy.value; //prędkość piłki w osi Y 
 var pozX_bramki_pocz = controls.pozX_bramki_pocz.value; //pozycja X bramki > 0, bo pilka = 0
 var pozY_bramki_pocz = controls.pozY_bramki_pocz.value; //pozycja Y bramki
@@ -31,8 +31,8 @@ przys_bramki[0] = 0;
 var V_pilki = new Array(czas); //aktualna prędkość bramki w osi Y
 V_pilki[0] = 0;
 var dx = pozX_bramki_pocz; //dystans w osi X między pozycją piłki, a osią bramki
-var dt = 1/f; //kwant czasu - okres zegara, który aktualizuje dane
-var Tx = dx/Vx_pilki; //czas w jakim piłka spotka się z osią bramki
+//kwant czasu - okres zegara, który aktualizuje dane
+var Tx = dx/Vx; //czas w jakim piłka spotka się z osią bramki
 var Txp = Tx;
 var czas = (Tx*f);
 var Vy_cale = []; //wszystkie prędkości piłki Y 
@@ -43,7 +43,7 @@ poz_pilki[0].push(0);
 var s_ham;
 var t_ham;
 var suma = 0;
-var e = [0.0,0.0];
+var e = [0.0,0.0]; //uchyb
 //e[0] = 0;
 //e[1] = 0;
 var g = 9.81;
@@ -58,7 +58,7 @@ for(var i=1;i<=czas;i++)
 
     Vy_cale.push(Vy_cale[i - 1] + g / f);
     poz_pilki[1].push(poz_pilki[1][i - 1] + Vy_cale[i] / f);//pozycja piłki w osi Y
-    poz_pilki[0].push(poz_pilki[0][i - 1] + Vx_pilki / f);//pozycja piłki w osi X
+    poz_pilki[0].push(poz_pilki[0][i - 1] + Vx / f);//pozycja piłki w osi X
 
     if(i >= 3) {
         var a_licz = (poz_pilki[1][i] - poz_pilki[1][i - 2]) * (poz_pilki[0][i - 2] - poz_pilki[0][i - 1]) + (poz_pilki[1][i - 1] - poz_pilki[1][i - 2]) * (poz_pilki[0][i] + 1); 
@@ -67,6 +67,7 @@ for(var i=1;i<=czas;i++)
         var a = a_licz / a_mian;
         var b = (a*poz_pilki[0][i - 1]*poz_pilki[0][i - 1] - a*poz_pilki[0][i - 2]*poz_pilki[0][i - 2] + poz_pilki[1][i - 2]-poz_pilki[1][i - 1])/(poz_pilki[0][i - 2]-poz_pilki[0][i - 1]);
         var c = poz_pilki[1][i - 2] - a* poz_pilki[0][i - 2]*poz_pilki[0][i - 2] - b*poz_pilki[0][i - 2];
+        console.log({a, b, c});
         
         doc_pos = a*pozX_bramki_pocz*pozX_bramki_pocz + b*pozX_bramki_pocz + c;
     }
@@ -74,23 +75,21 @@ for(var i=1;i<=czas;i++)
     var V_zadane = (doc_pos - pozY_bramki[i-1] - s_ham)/(Tx - t_ham); //prędkość zadania w danym momencie czasu
     var a_zadane = KT*((V_zadane - V_pilki[i-1])/Txp); //przyspieszenie zadane na podst, prędkości zadanej
     suma = suma + e[i];
-    var de = e[i] - e[i-1];
-    var a_n = przys_bramki[i-1] + k * (kp * (kb * e[i]) + ki * suma * dt + kd * de * dt);
-    przys_bramki[i] = a_n;
+    var de = e[i] - e[i-1]; //różnica uchybu
+    przys_bramki[i] = przys_bramki[i-1] + k * (kp * (kb * e[i]) + ki * suma / f + kd * de / f);
     e.push(a_zadane-przys_bramki[i]);
-
     if(amax < przys_bramki[i]){
         przys_bramki[i] = amax;
     }
     if(Tx < t_ham){
         przys_bramki[i] = -aham;
     }
-    V_pilki[i] = V_pilki[i-1] + przys_bramki[i] * dt;
-    pozY_bramki.push(pozY_bramki[i-1] + V_pilki[i] * dt);
-    dx = dx - (Vx_pilki*dt);
+    V_pilki[i] = V_pilki[i-1] + przys_bramki[i] / f;
+    pozY_bramki.push(pozY_bramki[i-1] + V_pilki[i] / f);
+    dx = dx - (Vx / f);
     console.log("dx: ", dx);
-    Tx = dx/Vx_pilki;
-    console.log("pozY_bramki[i]: ", pozY_bramki[i]);
+    Tx = dx/Vx;
+    console.log({pozY_bramki[i], doc_pos});
 }
 
 //for (var iter = 1; iter<t; iter++){

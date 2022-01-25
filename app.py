@@ -19,8 +19,8 @@ def index():
     "amax": Slider(title="przyspieszenie maksymalne bramki", value=1, start=0, end=10, step=0.5),
     "aham": Slider(title="przyspieszenie hamowania bramki", value=0, start=0, end=30, step=0.5),
 
-    "Vx": Slider(title="prędkość piłki w osi X", value=10, start=1, end=100, step=1),
-    "Vy": Slider(title="prędkość piłki w osi Y", value=10, start=0, end=100, step=1),
+    "Vx": Slider(title="prędkość piłki w osi X", value=10, start=1, end=50, step=1),
+    "Vy": Slider(title="prędkość piłki w osi Y", value=10, start=0, end=10, step=1),
     #"dx": Slider(title="dx", value=10, start=1, end=100, step=1)
     
     }
