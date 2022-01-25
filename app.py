@@ -16,30 +16,30 @@ def index():
     #region Sliders declaration
     controls1 = {
 
-    "amax": Slider(title="amax", value=1, start=0, end=100, step=0.5),
-    "aham": Slider(title="aham", value=0, start=0, end=100, step=0.5),
+    "amax": Slider(title="przyspieszenie maksymalne bramki", value=1, start=0, end=10, step=0.5),
+    "aham": Slider(title="przyspieszenie hamowania bramki", value=0, start=0, end=30, step=0.5),
 
-    "Vx": Slider(title="Vx", value=10, start=1, end=100, step=1),
-    "Vy": Slider(title="Vy", value=10, start=1, end=100, step=1),
-    "dx": Slider(title="dx", value=10, start=1, end=100, step=1)
+    "Vx": Slider(title="prędkość piłki w osi X", value=10, start=1, end=100, step=1),
+    "Vy": Slider(title="prędkość piłki w osi Y", value=10, start=0, end=100, step=1),
+    #"dx": Slider(title="dx", value=10, start=1, end=100, step=1)
     
     }
     controls2 = {
         "dummy_slider": Slider(name="dummy", visible=False, title="dummy_slider", value=0, start=0, end=1, step=1),
-        "f": Slider(name="f", title="f", value=1, start=0, end=1000, step=1),
-        "pozX_bramki_pocz": Slider(name="pozX_bramki_pocz", title="pozX_bramki_pocz", value=10, start=1, end=100, step=1),
-        "pozY_bramki_pocz": Slider(name="pozY_bramki_pocz", title="pozY_bramki_pocz", value=10, start=0, end=100, step=1),
-        "pozY_pocz": Slider(title="pozY_pocz", value=10, start=0, end=100, step=1)
+        #"f": Slider(name="f", title="f", value=1, start=0, end=1000, step=1),
+        "pozX_bramki_pocz": Slider(name="pozX_bramki_pocz", title="pozycja początkowa X bramki", value=10, start=1, end=100, step=1),
+        "pozY_bramki_pocz": Slider(name="pozY_bramki_pocz", title="pozycja początkowa Y bramki", value=10, start=0, end=100, step=1),
+        "pozY_pocz": Slider(title="pozycja początkowa Y piłki", value=10, start=0, end=100, step=1)
     }
     controls3 = {
-    "k": Slider(title="k", value=0, start=0, end=10, step=0.1),
-    "kp": Slider(title="kp", value=0, start=0, end=10, step=0.1),
-    "kd": Slider(title="kd", value=0, start=0, end=10, step=0.1),
-    "ki": Slider(title="ki", value=0, start=0, end=10, step=0.1),
-    "KT": Slider(title="KT", value=0, start=0, end=10, step=0.1),
-    "a": Slider(title="a", value=10, start=0, end=40, step=0.1),
-    "b": Slider(title="b", value=10, start=0, end=40, step=0.1),
-    "c": Slider(title="c", value=10, start=0, end=40, step=0.1)
+    #"k": Slider(title="k", value=0, start=0, end=10, step=0.1),
+    #"kp": Slider(title="kp", value=0, start=0, end=10, step=0.1),
+    #"kd": Slider(title="kd", value=0, start=0, end=10, step=0.1),
+    #"ki": Slider(title="ki", value=0, start=0, end=10, step=0.1),
+    #"KT": Slider(title="KT", value=0, start=0, end=10, step=0.1),
+    #"a": Slider(title="a", value=10, start=0, end=40, step=0.1),
+    #"b": Slider(title="b", value=10, start=0, end=40, step=0.1),
+    #"c": Slider(title="c", value=10, start=0, end=40, step=0.1)
     }
 
     save_button = {"save_button": Button(label="Zapisz do pliku", button_type="success", css_classes =['custom_button_bokeh'], name='save_button')}
