@@ -138,13 +138,17 @@ def index():
         console.log(key_names);
     """))
 
-    #compile_button['compile_button'].js_on_click(CustomJS(args=dict(compile_button=compile_button), code=""""""))
+
+
     callback_code = '\n'.join([str(line) for line in file])
     callback = CustomJS(args=dict(source=[source, source1, source2, comp_source, comp_source1, comp_source2], controls=controls), code=callback_code)
 
-    for single_control in controls_array:
-        single_control.js_on_change('value', callback)
+    #for single_control in controls_array:
+    #    single_control.js_on_change('value', callback)
+
+    compile_button['compile_button'].js_on_click(callback)
     #endregion
+
 
     #region Looks and placement of the elements
     # 1. kolumna
