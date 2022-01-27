@@ -96,7 +96,7 @@ def index():
 
     fig_predkosc_czas = figure(name="graph_predkosc", plot_height=365, plot_width=500, tooltips=[("x", "@x"), ("y", "@y")],
                           background_fill_color='#20262B', border_fill_color='#15191C', outline_line_color='#E5E5E5')
-    fig_predkosc_czas.line(x="x", y="y", source=source2)
+    fig_predkosc_czas.line(x="x", y="y", source=source2, line_color="yellow")
     fig_predkosc_czas.line(x="x", y="y", source=comp_source2, color="red", line_color="red")
     fig_predkosc_czas.xaxis.axis_line_color = "#E5E5E5"
     fig_predkosc_czas.yaxis.axis_line_color = "#E5E5E5"
@@ -191,8 +191,8 @@ def index():
     #endregion
 
     #region Layout of the site and render
-    layout_row = row([ inputs_column, column(width=35, height=800), inputs_column2, column(width=25, height=800), fig, column(width=25, height=800),
-                       fig_poz_czas, column(width=15, height=800)
+    layout_row = row([ inputs_column, column(width=35, height=800), inputs_column2, column(width=25, height=800),
+                       column(row(fig, column(width=20, height=10), fig_predkosc_czas), row(width=50, height=10),fig_poz_czas)
                        ])
     script, div = components(layout_row)
     return render_template(

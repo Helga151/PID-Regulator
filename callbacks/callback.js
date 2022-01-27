@@ -118,7 +118,7 @@ for (var i=1; i<=czas; i++){
 //console.log(ts);
 source[0].data = {x: ts, y: przys_bramki};
 source[1].data = {x: ts, y: pozY_bramki};
-source[2].data = {x: ts, y: przys_bramki};
+source[2].data = {x: ts, y: V_pilki};
 source[4].data = {x: ts, y: poz_pilki[1]};
 source.change.emit();
 
