@@ -40,8 +40,6 @@ Vy_cale.push(Vy_pocz);
 var poz_pilki = [[],[]]; //pozycja piłki
 poz_pilki[1].push(pozY_pocz);
 poz_pilki[0].push(0);
-var s_ham;
-var t_ham;
 var suma = 0;
 var e = [0.0,0.0]; //uchyb
 //e[0] = 0;
@@ -53,8 +51,8 @@ pozY_bramki.push(pozY_bramki_pocz);
 
 for(var i=1;i<=czas;i++)
 {
-    s_ham = (V_pilki[i-1]*V_pilki[i-1])/(2*aham); 
-    t_ham = V_pilki[i-1]/aham;
+    var s_ham = (V_pilki[i-1]*V_pilki[i-1])/(2*aham); 
+    var t_ham = V_pilki[i-1]/aham;
 
     Vy_cale.push(Vy_cale[i - 1] + g / f);
     poz_pilki[1].push(poz_pilki[1][i - 1] + Vy_cale[i] / f);//pozycja piłki w osi Y
