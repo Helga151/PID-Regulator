@@ -41,7 +41,9 @@ def index():
     #"b": Slider(title="b", value=10, start=0, end=40, step=0.1),
     #"c": Slider(title="c", value=10, start=0, end=40, step=0.1)
     }
-
+    compile_button = {
+        "compile_button": Button(label="Oblicz", button_type="primary", css_classes=['custom_button_bokeh'],
+                              name='compile_button')}
     save_button = {"save_button": Button(label="Zapisz do pliku", button_type="success", css_classes =['custom_button_bokeh'], name='save_button')}
     compare_button = {"compare_button": Button(label="Zapisz do porównania", button_type="primary", css_classes =['custom_button_bokeh'])}
     hide_button = {"hide_button": Button(label="Ukryj", button_type="warning", css_classes =['custom_button_bokeh'])}
@@ -135,8 +137,10 @@ def index():
         var key_names = Object.keys(localStorage);
         console.log(key_names);
     """))
+
+    #compile_button['compile_button'].js_on_click(CustomJS(args=dict(compile_button=compile_button), code=""""""))
     callback_code = '\n'.join([str(line) for line in file])
-    callback = CustomJS(args=dict(source=[source, source1, source2], controls=controls), code=callback_code)
+    callback = CustomJS(args=dict(source=[source, source1, source2, comp_source, comp_source1, comp_source2], controls=controls), code=callback_code)
 
     for single_control in controls_array:
         single_control.js_on_change('value', callback)
@@ -175,6 +179,7 @@ def index():
     text_with_controls2.update({
         "vspace2": Div(text="""<h1 style="margin-bottom:0.52cm"></h1>""")
     })
+    text_with_controls2.update(compile_button)
     text_with_controls2.update(save_button)
     text_with_controls2.update(compare_button)
     text_with_controls2.update(hide_button)
