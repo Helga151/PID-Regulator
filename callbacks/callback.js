@@ -33,9 +33,9 @@ poz_pilki[1].push(pozY_pocz);
 poz_pilki[0].push(0);
 
 //zmienne
-var dx = pozX_bramki; //dystans w osi X między pozycją piłki, a osią bramki
+var dystansX = pozX_bramki; //dystans w osi X między pozycją piłki, a osią bramki
 //kwant czasu - okres zegara, który aktualizuje dane
-var Tx = dx/vX_pilki_stale; //czas w jakim piłka spotka się z osią bramki
+var Tx = dystansX/vX_pilki_stale; //czas w jakim piłka spotka się z osią bramki
 var Txp = Tx;
 var doc_pozY_bramki; //docelowa pozycja bramki w osi Y - pozycja, która jest wyznaczona na podstawie paraboli przewidywanego lotu piłki
 var czas = Tx*f;
@@ -64,7 +64,7 @@ for(var i=1;i<=czas;i++)
     else doc_pozY_bramki = poz_pilki[1][i];
     var V_zadane = (doc_pozY_bramki - pozY_bramki[i-1] - s_ham)/(Tx - t_ham); //prędkość zadania w danym momencie czasu
     var a_zadane = KT*((V_zadane - vY_bramki[i-1])/Txp); //przyspieszenie zadane na podst, prędkości zadanej
-    suma = suma + e[i];
+    suma += e[i];
     var de = e[i] - e[i-1]; //różnica uchybu
     przys_bramki[i] = przys_bramki[i-1] + k * (kp * (kb * e[i]) + ki * suma / f + kd * de / f);
     e.push(a_zadane-przys_bramki[i]);
@@ -76,9 +76,9 @@ for(var i=1;i<=czas;i++)
     }
     vY_bramki[i] = vY_bramki[i-1] + przys_bramki[i] / f;
     pozY_bramki.push(pozY_bramki[i-1] + vY_bramki[i] / f);
-    dx = dx - (vX_pilki_stale / f);
-    console.log("dx: ", dx);
-    Tx = dx/vX_pilki_stale;
+    dystansX = dystansX - (vX_pilki_stale / f);
+    console.log("dystansX: ", dystansX);
+    Tx = dystansX/vX_pilki_stale;
     console.log("pozY_bramki[i]: ", pozY_bramki[i]);
 }
 var ts = [];
