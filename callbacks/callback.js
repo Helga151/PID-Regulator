@@ -90,24 +90,6 @@ for(var i=1;i<=czas;i++)
     Tx = dx/Vx;
     console.log("pozY_bramki[i]: ", pozY_bramki[i]);
 }
-
-//for (var iter = 1; iter<t; iter++){
-//    temperature_inside.push(temperature_inside[temperature_inside.length-1]+(sampling_period/(mass_air*specific_heat_air+mass_object*specific_heat_object))*(power_heater-((heat_transfer_coefficient/thickness_wall)*area_wall*(temperature_inside[temperature_inside.length-1]-temperature_outside))));
-//    var e_here = target_temperature-temperature_inside[iter];
-//    e.push(e_here);
-//    e_sum += e_here;
-//    if (iter>1){
-//        var en = e[iter];
-//        var den = e[e.length-1]-e[e.length-2];
-//        var u = kp*(en+(sampling_period/Ti)*e_sum + (Td/sampling_period)*den);
-//        power_heater = max_power_heater*u;
-//        if (power_heater<0){
-//            power_heater = 0;
-//        }
-//    }
-//}
-//console.log(t);
-//console.log(temperature_inside);
 var ts = [];
 //console.log(ts);
 for (var i=1; i<=czas; i++){
@@ -119,4 +101,3 @@ source[1].data = {x: ts, y: pozY_bramki};
 source[2].data = {x: ts, y: V_pilki};
 source[4].data = {x: ts, y: poz_pilki[1]};
 source.change.emit();
-
