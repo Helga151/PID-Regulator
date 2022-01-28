@@ -1,11 +1,11 @@
-# Projekt pieca na PA
+# Projekt sterowania celem na PA
 
 - Plik app.py to aplikacja webowa
 - Folder callbacks zawiera callbacki obsługujące funkcje strony po stronie klienta
 - Folder static zawiera skrypty wywołujące się podczas uruchomienia strony
 - Folder templates zawiera pliki html
 - Plik deps zawiera dependencies projektu
-- Plik sim.py zawiera symulację pieca i PID w pythonie (aktualnie zbędne)
+
 
 ### Instalacja zależności i obsługa wirtualnego środowiska
 Tworzenie i otwarcie wirtualnego środowiska:

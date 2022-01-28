@@ -41,7 +41,9 @@ def index():
     #"b": Slider(title="b", value=10, start=0, end=40, step=0.1),
     #"c": Slider(title="c", value=10, start=0, end=40, step=0.1)
     }
-
+    compile_button = {
+        "compile_button": Button(label="Oblicz", button_type="primary", css_classes=['custom_button_bokeh'],
+                              name='compile_button')}
     save_button = {"save_button": Button(label="Zapisz do pliku", button_type="success", css_classes =['custom_button_bokeh'], name='save_button')}
     compare_button = {"compare_button": Button(label="Zapisz do porównania", button_type="primary", css_classes =['custom_button_bokeh'])}
     hide_button = {"hide_button": Button(label="Ukryj", button_type="warning", css_classes =['custom_button_bokeh'])}
@@ -60,19 +62,51 @@ def index():
     #region Graphs setup
     source = ColumnDataSource()
     comp_source = ColumnDataSource()
-    fig = figure(name="graph", plot_height=730, plot_width=1000, tooltips=[("x", "@x"), ("y", "@y")],
+    source1 = ColumnDataSource()
+    comp_source1 = ColumnDataSource()
+    source2 = ColumnDataSource()
+    comp_source2 = ColumnDataSource()
+    fig = figure(name="graph", plot_height=365, plot_width=500, tooltips=[("x", "@x"), ("y", "@y")],
     background_fill_color='#20262B', border_fill_color='#15191C', outline_line_color='#E5E5E5')
     fig.line(x="x", y="y", source=source)
     fig.line(x="x", y="y", source=comp_source, color="red", line_color="red")
     fig.xaxis.axis_line_color="#E5E5E5"
     fig.yaxis.axis_line_color="#E5E5E5"
     fig.xaxis.axis_label = "Czas symulacji [s]"
-    fig.yaxis.axis_label = "Przyspieszenie [m/s]"
+    fig.yaxis.axis_label = "Przyspieszenie [m/s^2]"
     fig.xaxis.axis_label_text_color='#9cdcfe'
     fig.yaxis.axis_label_text_color='#9cdcfe'
     fig.xaxis.major_label_text_color = "#9cdcfe"
     fig.yaxis.major_label_text_color = "#9cdcfe"
     fig.grid.grid_line_alpha = 0.2
+
+    fig_poz_czas = figure(name="graph_poz", plot_height=365, plot_width=500, tooltips=[("x", "@x"), ("y", "@y")],
+                 background_fill_color='#20262B', border_fill_color='#15191C', outline_line_color='#fced31')
+    fig_poz_czas.line(x="x", y="y", source=source1)
+    fig_poz_czas.line(x="x", y="y", source=comp_source1, color="red", line_color="red")
+    fig_poz_czas.xaxis.axis_line_color = "#fced31"
+    fig_poz_czas.yaxis.axis_line_color = "#fced31"
+    fig_poz_czas.xaxis.axis_label = "Czas symulacji [s]"
+    fig_poz_czas.yaxis.axis_label = "Pozycja [m]"
+    fig_poz_czas.xaxis.axis_label_text_color = '#fced31'
+    fig_poz_czas.yaxis.axis_label_text_color = '#fced31'
+    fig_poz_czas.xaxis.major_label_text_color = "#fced31"
+    fig_poz_czas.yaxis.major_label_text_color = "#fced31"
+    fig_poz_czas.grid.grid_line_alpha = 0.2
+
+    fig_predkosc_czas = figure(name="graph_predkosc", plot_height=365, plot_width=500, tooltips=[("x", "@x"), ("y", "@y")],
+                          background_fill_color='#20262B', border_fill_color='#15191C', outline_line_color='#E5E5E5')
+    fig_predkosc_czas.line(x="x", y="y", source=source2, line_color="yellow")
+    fig_predkosc_czas.line(x="x", y="y", source=comp_source2, color="red", line_color="red")
+    fig_predkosc_czas.xaxis.axis_line_color = "#E5E5E5"
+    fig_predkosc_czas.yaxis.axis_line_color = "#E5E5E5"
+    fig_predkosc_czas.xaxis.axis_label = "Czas symulacji [s]"
+    fig_predkosc_czas.yaxis.axis_label = "Prędkość [m/s]"
+    fig_predkosc_czas.xaxis.axis_label_text_color = '#9cfcfd'
+    fig_predkosc_czas.yaxis.axis_label_text_color = '#9cfcfd'
+    fig_predkosc_czas.xaxis.major_label_text_color = "#9cfcfd"
+    fig_predkosc_czas.yaxis.major_label_text_color = "#9cfcfd"
+    fig_predkosc_czas.grid.grid_line_alpha = 0.2
     #show(fig)
     #endregion
 
@@ -103,26 +137,33 @@ def index():
         var key_names = Object.keys(localStorage);
         console.log(key_names);
     """))
+
+
+
     callback_code = '\n'.join([str(line) for line in file])
-    callback = CustomJS(args=dict(source=source, controls=controls), code=callback_code)
-    for single_control in controls_array:
-        single_control.js_on_change('value', callback)
+    callback = CustomJS(args=dict(source=[source, source1, source2, comp_source, comp_source1, comp_source2], controls=controls), code=callback_code)
+
+    #for single_control in controls_array:
+    #    single_control.js_on_change('value', callback)
+
+    compile_button['compile_button'].js_on_click(callback)
     #endregion
+
 
     #region Looks and placement of the elements
     # 1. kolumna
     text_with_controls = {
-        "header": Div(text="""<h1>Menu konfiguracji</h1>""", width=320, height=50)
+        "header": Div(text="""<h1>Menu konfiguracji</h1>""", width=270, height=50)
     }
     text_with_controls.update({
-        "starting_conditions": Div(text="""<h2>Początkowe warunki:</h2>""", width=320, height=50)
+        "starting_conditions": Div(text="""<h2>Początkowe warunki:</h2>""", width=220, height=50)
     })
     text_with_controls.update(controls1)
     text_with_controls.update({
         "vspace": Div(text="""<h1 style="margin-bottom:0.2cm"></h1>""")
     })
     text_with_controls.update({
-        "simulation data": Div(text="""<h2>Dane do symulacji:</h2>""", width=320, height=50)
+        "simulation data": Div(text="""<h2>Dane do symulacji:</h2>""", width=220, height=50)
     })
     text_with_controls.update(controls2)
     text_with_controls.update({
@@ -130,18 +171,19 @@ def index():
     })
 
     controls_array = text_with_controls.values()
-    inputs_column = column(*controls_array, width=350, height=800)
+    inputs_column = column(*controls_array, width=250, height=800)
     # 2. kolumna
     text_with_controls2 = {
         "placeholder": Div(text="""<h1 style="margin-bottom:0.2cm"></h1>""")
     }
     text_with_controls2.update({
-        "PID_coefficients": Div(text="""<h2>Zmienne regulujące:</h2>""", width=320, height=50)
+        "PID_coefficients": Div(text="""<h2>Zmienne regulujące:</h2>""", width=220, height=50)
     })
     text_with_controls2.update(controls3)
     text_with_controls2.update({
         "vspace2": Div(text="""<h1 style="margin-bottom:0.52cm"></h1>""")
     })
+    text_with_controls2.update(compile_button)
     text_with_controls2.update(save_button)
     text_with_controls2.update(compare_button)
     text_with_controls2.update(hide_button)
@@ -149,11 +191,13 @@ def index():
     text_with_controls2.update(delete_select)
     controls_array2 = text_with_controls2.values()
 
-    inputs_column2 = column(*controls_array2, width=350, height=800)
+    inputs_column2 = column(*controls_array2, width=250, height=800)
     #endregion
 
     #region Layout of the site and render
-    layout_row = row([ inputs_column, column(width=50, height=800), inputs_column2, column(width=50, height=800), fig ])
+    layout_row = row([ inputs_column, column(width=35, height=800), inputs_column2, column(width=25, height=800),
+                       column(row(fig, column(width=20, height=10), fig_predkosc_czas), row(width=50, height=10),fig_poz_czas)
+                       ])
     script, div = components(layout_row)
     return render_template(
         'index.html',
