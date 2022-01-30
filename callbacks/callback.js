@@ -90,7 +90,7 @@ for(var i=1;i<=czas;i++)
     Tx = dystansX/vX_pilki_stale; 
 }
 console.log({doc_pozY_bramki});
-console.log("pozY_bramki[i]: ", pozY_bramki[czas]);
+console.log("pozY_bramki[i]: ", pozY_bramki[czas-1]);
 console.log("dystansX: ", dystansX);
 var ts = [];
 //console.log(ts);
