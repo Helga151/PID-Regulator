@@ -69,7 +69,7 @@ def index():
     fig.line(x="x", y="y", source=comp_source, color="red", line_color="red")
     fig.xaxis.axis_line_color="#E5E5E5"
     fig.yaxis.axis_line_color="#E5E5E5"
-    fig.xaxis.axis_label = "Czas symulacji [s]"
+    fig.xaxis.axis_label = "Czas symulacji [ms]"
     fig.yaxis.axis_label = "Przyspieszenie [m/s^2]"
     fig.xaxis.axis_label_text_color='#9cdcfe'
     fig.yaxis.axis_label_text_color='#9cdcfe'
@@ -83,7 +83,7 @@ def index():
     fig_poz_czas.line(x="x", y="y", source=comp_source1, color="red", line_color="red")
     fig_poz_czas.xaxis.axis_line_color = "#fced31"
     fig_poz_czas.yaxis.axis_line_color = "#fced31"
-    fig_poz_czas.xaxis.axis_label = "Czas symulacji [s]"
+    fig_poz_czas.xaxis.axis_label = "Czas symulacji [ms]"
     fig_poz_czas.yaxis.axis_label = "Pozycja [m]"
     fig_poz_czas.xaxis.axis_label_text_color = '#fced31'
     fig_poz_czas.yaxis.axis_label_text_color = '#fced31'
@@ -97,7 +97,7 @@ def index():
     fig_predkosc_czas.line(x="x", y="y", source=comp_source2, color="red", line_color="red")
     fig_predkosc_czas.xaxis.axis_line_color = "#E5E5E5"
     fig_predkosc_czas.yaxis.axis_line_color = "#E5E5E5"
-    fig_predkosc_czas.xaxis.axis_label = "Czas symulacji [s]"
+    fig_predkosc_czas.xaxis.axis_label = "Czas symulacji [ms]"
     fig_predkosc_czas.yaxis.axis_label = "Prędkość [m/s]"
     fig_predkosc_czas.xaxis.axis_label_text_color = '#9cfcfd'
     fig_predkosc_czas.yaxis.axis_label_text_color = '#9cfcfd'
