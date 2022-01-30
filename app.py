@@ -16,11 +16,11 @@ def index():
     #region Sliders declaration
     controls1 = {
 
-    "amax": Slider(title="przyspieszenie maksymalne bramki", value=1, start=0, end=10, step=0.5),
-    "aham": Slider(title="przyspieszenie hamowania bramki", value=0, start=0, end=30, step=0.5),
+    "amax": Slider(title="przyspieszenie maksymalne bramki", value=1, start=0, end=30, step=0.5),
+    "aham": Slider(title="przyspieszenie hamowania bramki", value=0, start=10, end=60, step=0.5),
 
     "Vx": Slider(title="prędkość piłki w osi X", value=10, start=1, end=50, step=1),
-    "Vy": Slider(title="prędkość piłki w osi Y", value=10, start=0, end=10, step=1),
+    "Vy": Slider(title="prędkość piłki w osi Y", value=0, start=0, end=10, step=1),
     #"dx": Slider(title="dx", value=10, start=1, end=100, step=1)
     
     }
@@ -32,14 +32,11 @@ def index():
         "pozY_pocz": Slider(title="pozycja początkowa Y piłki", value=10, start=0, end=100, step=1)
     }
     controls3 = {
-    #"k": Slider(title="k", value=0, start=0, end=10, step=0.1),
-    #"kp": Slider(title="kp", value=0, start=0, end=10, step=0.1),
-    #"kd": Slider(title="kd", value=0, start=0, end=10, step=0.1),
-    #"ki": Slider(title="ki", value=0, start=0, end=10, step=0.1),
-    #"KT": Slider(title="KT", value=0, start=0, end=10, step=0.1),
-    #"a": Slider(title="a", value=10, start=0, end=40, step=0.1),
-    #"b": Slider(title="b", value=10, start=0, end=40, step=0.1),
-    #"c": Slider(title="c", value=10, start=0, end=40, step=0.1)
+    "k": Slider(title="k", value=1, start=1, end=3, step=0.1),
+    "kp": Slider(title="kp", value=1, start=1, end=5, step=0.1),
+    "kd": Slider(title="kd", value=1, start=1, end=10, step=0.1),
+    "ki": Slider(title="ki", value=1, start=1, end=10, step=0.1),
+    "KT": Slider(title="KT", value=1, start=1, end=30, step=0.5)
     }
     compile_button = {
         "compile_button": Button(label="Oblicz", button_type="primary", css_classes=['custom_button_bokeh'],
