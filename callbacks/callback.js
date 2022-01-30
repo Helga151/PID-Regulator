@@ -73,7 +73,7 @@ for(var i=1;i<=czas;i++)
     var a_zadane = KT*((V_zadane - vY_bramki[i-1])/Txp); //przyspieszenie zadane na podst, prędkości zadanej
     suma += e[i];
     var de = e[i] - e[i-1]; //różnica uchybu
-    przys_bramki[i] = przys_bramki[i-1] + k * (kp * e[i]) + ki * suma / f + kd * de / f);
+    przys_bramki[i] = przys_bramki[i-1] + k * (kp * e[i]) + ki * suma / f + kd * de / f;
     e.push(a_zadane-przys_bramki[i]);
     if(amax < przys_bramki[i]){
         przys_bramki[i] = amax;

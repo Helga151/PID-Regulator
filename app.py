@@ -27,15 +27,15 @@ def index():
     controls2 = {
         "dummy_slider": Slider(name="dummy", visible=False, title="dummy_slider", value=0, start=0, end=1, step=1),
         #"f": Slider(name="f", title="f", value=1, start=0, end=1000, step=1),
-        "pozX_bramki": Slider(name="pozX_bramki", title="pozycja X bramki", value=10, start=1, end=100, step=1),
-        "pozY_bramki_pocz": Slider(name="pozY_bramki_pocz", title="pozycja początkowa Y bramki", value=10, start=0, end=100, step=1),
-        "pozY_pocz": Slider(title="pozycja początkowa Y piłki", value=10, start=0, end=100, step=1)
+        "pozX_bramki": Slider(name="pozX_bramki", title="pozycja X bramki", value=10, start=1, end=30, step=1),
+        "pozY_bramki_pocz": Slider(name="pozY_bramki_pocz", title="pozycja początkowa Y bramki", value=3, start=0, end=7, step=0.5),
+        "pozY_pocz": Slider(title="pozycja początkowa Y piłki", value=1, start=0, end=3.5, step=0.5)
     }
     controls3 = {
-    "k": Slider(title="k", value=1, start=1, end=3, step=0.1),
-    "kp": Slider(title="kp", value=1, start=1, end=5, step=0.1),
-    "kd": Slider(title="kd", value=1, start=1, end=10, step=0.1),
-    "ki": Slider(title="ki", value=1, start=1, end=10, step=0.1),
+    "k": Slider(title="k", value=1, start=0, end=3, step=0.01),
+    "kp": Slider(title="kp", value=0.1, start=0, end=1, step=0.01),
+    "kd": Slider(title="kd", value=1, start=0, end=50, step=1),
+    "ki": Slider(title="ki", value=0, start=0, end=3, step=0.01),
     "KT": Slider(title="KT", value=1, start=1, end=30, step=0.5)
     }
     compile_button = {
