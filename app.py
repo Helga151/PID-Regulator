@@ -15,28 +15,23 @@ app = Flask(__name__)
 def index():
     #region Sliders declaration
     controls1 = {
-
-    "amax": Slider(title="przyspieszenie maksymalne bramki", value=1, start=0, end=30, step=0.5),
-    "aham": Slider(title="przyspieszenie hamowania bramki", value=0, start=10, end=60, step=0.5),
-
-    "Vx": Slider(title="prędkość piłki w osi X", value=10, start=1, end=50, step=1),
-    "Vy": Slider(title="prędkość piłki w osi Y", value=0, start=0, end=10, step=1),
-    #"dx": Slider(title="dx", value=10, start=1, end=100, step=1)
-    
+    "amax": Slider(name="amax", title="przyspieszenie maksymalne bramki", value=10, start=0, end=30, step=0.5),
+    "aham": Slider(name="aham", title="przyspieszenie hamowania bramki", value=20, start=10, end=60, step=0.5),
+    "Vx": Slider(name="Vx", title="prędkość piłki w osi X", value=10, start=1, end=50, step=1),
+    "Vy": Slider(name="Vy", title="prędkość piłki w osi Y", value=10, start=0, end=10, step=1),
     }
     controls2 = {
         "dummy_slider": Slider(name="dummy", visible=False, title="dummy_slider", value=0, start=0, end=1, step=1),
-        #"f": Slider(name="f", title="f", value=1, start=0, end=1000, step=1),
         "pozX_bramki": Slider(name="pozX_bramki", title="pozycja X bramki", value=10, start=1, end=30, step=1),
         "pozY_bramki_pocz": Slider(name="pozY_bramki_pocz", title="pozycja początkowa Y bramki", value=3, start=0, end=7, step=0.5),
-        "pozY_pocz": Slider(title="pozycja początkowa Y piłki", value=1, start=0, end=3.5, step=0.5)
+        "pozY_pocz": Slider(name="pozY_pocz", title="pozycja początkowa Y piłki", value=1, start=0, end=3.5, step=0.5)
     }
     controls3 = {
     "k": Slider(title="k", value=1, start=0, end=3, step=0.01),
-    "kp": Slider(title="kp", value=0.1, start=0, end=1, step=0.01),
+    "kp": Slider(title="kp", value=0.23, start=0, end=1, step=0.01),
     "kd": Slider(title="kd", value=1, start=0, end=50, step=1),
-    "ki": Slider(title="ki", value=0, start=0, end=3, step=0.01),
-    "KT": Slider(title="KT", value=1, start=1, end=30, step=0.5)
+    "ki": Slider(title="ki", value=0.08, start=0, end=2, step=0.01),
+    "KT": Slider(title="KT", value=15, start=1, end=30, step=0.5)
     }
     compile_button = {
         "compile_button": Button(label="Oblicz", button_type="primary", css_classes=['custom_button_bokeh'],
@@ -44,7 +39,7 @@ def index():
     save_button = {"save_button": Button(label="Zapisz do pliku", button_type="success", css_classes =['custom_button_bokeh'], name='save_button')}
     compare_button = {"compare_button": Button(label="Zapisz do porównania", button_type="primary", css_classes =['custom_button_bokeh'])}
     hide_button = {"hide_button": Button(label="Ukryj", button_type="warning", css_classes =['custom_button_bokeh'])}
-    load_select = {"load_select": Select(name="load_select", title="Wczytaj plik zapisu...", options=["1", "2"])}
+    load_select = {"load_select": Select(name="load_select", title="Wczytaj plik zapisu...", value="default", options=["default"])}
     delete_select = {"delete_select": Select(name="delete_select", title="Usuń plik zapisu...", options=load_select["load_select"].options)}
     #endregion
 
@@ -114,27 +109,63 @@ def index():
         $(document).ready(function() {
             const d = new Date()
             const date = d.toISOString().split('T')[0];
-            const time = d.toTimeString().split(' ')[0].replace(/:/g, '-');
+            const time = d.toTimeString().split(' ')[0].replace(/:/g, ':');
             //zapiszanie wartości z suwaków do LocalStorage
-            var f = Bokeh.documents[0].get_model_by_name('f');
-            var pozX_bramki_pocz = Bokeh.documents[0].get_model_by_name('pozX_bramki_pocz');
+            var amax = Bokeh.documents[0].get_model_by_name('amax');
+            var aham = Bokeh.documents[0].get_model_by_name('aham');
+            var Vx = Bokeh.documents[0].get_model_by_name('Vx');
+            var Vy = Bokeh.documents[0].get_model_by_name('Vy');
+            var pozX_bramki = Bokeh.documents[0].get_model_by_name('pozX_bramki');
             var pozY_bramki_pocz = Bokeh.documents[0].get_model_by_name('pozY_bramki_pocz');
+            var pozY_pocz = Bokeh.documents[0].get_model_by_name('pozY_pocz');
             var data = {
-                'f': f.value,
-                'pozX_bramki_pocz': pozX_bramki_pocz.value,
-                'pozY_bramki_pocz': pozY_bramki_pocz.value
+                'amax': parseFloat(amax.value).toFixed(2),
+                'aham': parseFloat(aham.value).toFixed(2),
+                'Vx': parseFloat(Vx.value).toFixed(2),
+                'Vy': parseFloat(Vy.value).toFixed(2),
+                'pozX_bramki': parseFloat(pozX_bramki.value).toFixed(2),
+                'pozY_bramki_pocz': parseFloat(pozY_bramki_pocz.value).toFixed(2),
+                'pozY_pocz': parseFloat(pozY_pocz.value).toFixed(2)
             };
             var czas = `${date} ${time}`;
             localStorage.setItem(czas, JSON.stringify(data));
+            var load_select = Bokeh.documents[0].get_model_by_name('load_select');
+            var delete_select = Bokeh.documents[0].get_model_by_name('delete_select');
+            var key_names = Object.keys(localStorage);
+            load_select.options = key_names;
+            delete_select.options = key_names;
         });
-        var key_names = Object.keys(localStorage);
-        console.log(key_names);
     """))
     load_select['load_select'].js_on_change('value', CustomJS(args=dict(load_select=load_select), code="""
-        var key_names = Object.keys(localStorage);
-        console.log(key_names);
+        $(document).ready(function() {
+            var load_select = Bokeh.documents[0].get_model_by_name('load_select');
+            var data = JSON.parse(localStorage.getItem(load_select.value));
+            var amax = Bokeh.documents[0].get_model_by_name('amax');
+            amax.value = data.amax;
+            var aham = Bokeh.documents[0].get_model_by_name('aham');
+            aham.value = data.aham;
+            var Vx = Bokeh.documents[0].get_model_by_name('Vx');
+            Vx.value = data.Vx;
+            var Vy = Bokeh.documents[0].get_model_by_name('Vy');
+            Vy.value = data.Vy;
+            var pozX_bramki = Bokeh.documents[0].get_model_by_name('pozX_bramki');
+            pozX_bramki.value = data.pozX_bramki;
+            var pozY_bramki_pocz = Bokeh.documents[0].get_model_by_name('pozY_bramki_pocz');
+            pozY_bramki_pocz.value = data.pozY_bramki_pocz;
+            var pozY_pocz = Bokeh.documents[0].get_model_by_name('pozY_pocz');
+            pozY_pocz.value = data.pozY_pocz;
+        });
     """))
-
+    #zawsze jeden zapis będzie musiał zostać
+    delete_select['delete_select'].js_on_change('value', CustomJS(args=dict(delete_select=delete_select), code="""
+        $(document).ready(function() {
+            var delete_select = Bokeh.documents[0].get_model_by_name('delete_select');
+            console.log(delete_select.value);
+            localStorage.removeItem(delete_select.value); 
+            var key_names = Object.keys(localStorage);
+            delete_select.options = key_names;
+        });
+    """))
 
 
     callback_code = '\n'.join([str(line) for line in file])
