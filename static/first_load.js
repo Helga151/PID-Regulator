@@ -2,6 +2,7 @@ console.log("first_load");
 
 // załadowanie opcji load i delete
 $(document).ready(function() {
+    localStorage.setItem(null, JSON.stringify(0));
     var load_select = Bokeh.documents[0].get_model_by_name('load_select');
     var delete_select = Bokeh.documents[0].get_model_by_name('delete_select');
     var key_names = Object.keys(localStorage);
