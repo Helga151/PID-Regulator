@@ -1,4 +1,4 @@
-# Projekt sterowania celem na PA
+# Projekt sterowania bramką na przedmiot Podstawy Automatyki
 
 - Plik app.py to aplikacja webowa
 - Folder callbacks zawiera callbacki obsługujące funkcje strony po stronie klienta
