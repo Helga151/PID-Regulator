@@ -19,12 +19,12 @@ def index():
         "aham": Slider(name="aham", title="przyspieszenie hamowania bramki", value=20, start=10, end=60, step=0.5),
         "Vx": Slider(name="Vx", title="prędkość piłki w osi X", value=10, start=1, end=50, step=1),
         "Vy": Slider(name="Vy", title="prędkość piłki w osi Y", value=10, start=0, end=10, step=1),
+    }
+    controls2 = {
         "dummy_slider": Slider(name="dummy", visible=False, title="dummy_slider", value=0, start=0, end=1, step=1),
         "pozX_bramki": Slider(name="pozX_bramki", title="pozycja X bramki", value=10, start=1, end=30, step=1),
         "pozY_bramki_pocz": Slider(name="pozY_bramki_pocz", title="pozycja początkowa Y bramki", value=3, start=0, end=7, step=0.5),
         "pozY_pocz": Slider(name="pozY_pocz", title="pozycja początkowa Y piłki", value=1, start=0, end=3.5, step=0.5)
-    }
-    controls2 = {
     }
     controls3 = {
         "k": Slider(name="k", title="globalna zmienna regulatora", value=1, start=0, end=3, step=0.01),
@@ -208,6 +208,7 @@ def index():
     text_with_controls.update({
         "vspace": Div(text="""<h1 style="margin-bottom:0.2cm"></h1>""")
     })
+    text_with_controls.update(controls2)
     text_with_controls.update({
         "vspace": Div(text="""<h1 style="margin-bottom:1cm"></h1>""")
     })
