@@ -29,7 +29,7 @@ def index():
     controls3 = {
         "k": Slider(title="k", value=1, start=0, end=3, step=0.01),
         "kp": Slider(title="kp", value=0.23, start=0, end=1, step=0.01),
-        "kd": Slider(title="kd", value=1, start=0, end=50, step=1),
+        "kd": Slider(title="kd", value=1, start=0, end=30, step=1),
         "ki": Slider(title="ki", value=0.08, start=0, end=2, step=0.01),
         "KT": Slider(title="KT", value=15, start=1, end=30, step=0.5)
     }

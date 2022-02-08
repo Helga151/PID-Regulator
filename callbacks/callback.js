@@ -30,7 +30,7 @@ var dystansX = pozX_bramki; //dystans w osi X między pozycją piłki, a osią b
 var Tx = dystansX/vX_pilki_stale; //czas w jakim piłka spotka się z osią bramki
 var Txp = Tx;
 var doc_pozY_bramki; //docelowa pozycja bramki w osi Y - pozycja, która jest wyznaczona na podstawie paraboli przewidywanego lotu piłki
-var czas = Tx*f;
+var czas = Math.ceil(Tx*f);
 var odbito = 0;
 var oid = 0;
 
@@ -51,18 +51,16 @@ pozY_pilki[0] = pozY_pocz;
 //console.log({pozX_pilki, pozY_pilki});
 
 function Wyznaczenie_pozycjiY_bramki(x1, y1, x2, y2, x3, y3) {
-    var a_licz = (y3 - y1) * (x1 - x2) + (y2 - y1) * (x3 + 1);    
-    var a_mian = (x1 - x2) * ((x3*x3 - x1*x1)- (x2+x1)*(x3-1));
-    
-    var a = a_licz / a_mian;
-    var b = (a*x2*x2 - a*x1*x1 + y1-y2)/(x1-x2);
-    var c = y1 - a* x1*x1 - b*x1;
-    //console.log({a, b, c});
-    //return a*pozX_bramki*pozX_bramki + b*pozX_bramki + c;
-    var wysokosc = a*pozX_bramki*pozX_bramki + b*pozX_bramki + c;
+    var s1 = y1 * (pozX_bramki - x2)/(x1 - x2) * (pozX_bramki - x3)/(x1 - x3);//pierwszy składnik sumy ze wzoru Lagrange'a
+    var s2 = y2 * (pozX_bramki - x1)/(x2 - x1) * (pozX_bramki - x3)/(x2 - x3);
+    var s3 = y3 * (pozX_bramki - x1)/(x3 - x1) * (pozX_bramki - x2)/(x3 - x2);
+    var wysokosc = s1 + s2 + s3;
     //console.log({wysokosc});
     if (wysokosc > 0) return wysokosc;
     else {
+        var a = y1 / ((x1 - x2) * (x1 - x3)) + y2 / ((x2 - x1) * (x2 - x3)) + y3 / ((x3 - x1) * (x3 - x2));
+        var b = (a*x2*x2 - a*x1*x1 + y1-y2)/(x1-x2);
+        var c = y1 - a* x1*x1 - b*x1;
         var delta = b*b-4*a*c;
         if (delta < 0){
             console.log("ujemna delta");
