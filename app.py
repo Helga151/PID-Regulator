@@ -19,12 +19,12 @@ def index():
         "aham": Slider(name="aham", title="przyspieszenie hamowania bramki", value=20, start=10, end=60, step=0.5),
         "Vx": Slider(name="Vx", title="prędkość piłki w osi X", value=10, start=1, end=50, step=1),
         "Vy": Slider(name="Vy", title="prędkość piłki w osi Y", value=10, start=0, end=10, step=1),
-    }
-    controls2 = {
         "dummy_slider": Slider(name="dummy", visible=False, title="dummy_slider", value=0, start=0, end=1, step=1),
         "pozX_bramki": Slider(name="pozX_bramki", title="pozycja X bramki", value=10, start=1, end=30, step=1),
         "pozY_bramki_pocz": Slider(name="pozY_bramki_pocz", title="pozycja początkowa Y bramki", value=3, start=0, end=7, step=0.5),
         "pozY_pocz": Slider(name="pozY_pocz", title="pozycja początkowa Y piłki", value=1, start=0, end=3.5, step=0.5)
+    }
+    controls2 = {
     }
     controls3 = {
         "k": Slider(name="k", title="globalna zmienna regulatora", value=1, start=0, end=3, step=0.01),
@@ -63,7 +63,7 @@ def index():
     fig.xaxis.axis_line_color="#E5E5E5"
     fig.yaxis.axis_line_color="#E5E5E5"
     fig.xaxis.axis_label = "Czas symulacji [ms]"
-    fig.yaxis.axis_label = "Przyspieszenie [m/s^2]"
+    fig.yaxis.axis_label = "Przyspieszenie bramki [m/s^2]"
     fig.xaxis.axis_label_text_color='#9cdcfe'
     fig.yaxis.axis_label_text_color='#9cdcfe'
     fig.xaxis.major_label_text_color = "#9cdcfe"
@@ -77,7 +77,7 @@ def index():
     fig_poz_czas.xaxis.axis_line_color = "#fced31"
     fig_poz_czas.yaxis.axis_line_color = "#fced31"
     fig_poz_czas.xaxis.axis_label = "Czas symulacji [ms]"
-    fig_poz_czas.yaxis.axis_label = "Pozycja [m]"
+    fig_poz_czas.yaxis.axis_label = "Pozycja piłki i bramki w osi Y [m]"
     fig_poz_czas.xaxis.axis_label_text_color = '#fced31'
     fig_poz_czas.yaxis.axis_label_text_color = '#fced31'
     fig_poz_czas.xaxis.major_label_text_color = "#fced31"
@@ -91,7 +91,7 @@ def index():
     fig_predkosc_czas.xaxis.axis_line_color = "#E5E5E5"
     fig_predkosc_czas.yaxis.axis_line_color = "#E5E5E5"
     fig_predkosc_czas.xaxis.axis_label = "Czas symulacji [ms]"
-    fig_predkosc_czas.yaxis.axis_label = "Prędkość [m/s]"
+    fig_predkosc_czas.yaxis.axis_label = "Prędkość bramki [m/s]"
     fig_predkosc_czas.xaxis.axis_label_text_color = '#9cfcfd'
     fig_predkosc_czas.yaxis.axis_label_text_color = '#9cfcfd'
     fig_predkosc_czas.xaxis.major_label_text_color = "#9cfcfd"
@@ -202,16 +202,12 @@ def index():
         "header": Div(text="""<h1>Menu konfiguracji</h1>""", width=270, height=50)
     }
     text_with_controls.update({
-        "starting_conditions": Div(text="""<h2>Początkowe warunki:</h2>""", width=220, height=50)
+        "simulation data": Div(text="""<h2>Dane do symulacji:</h2>""", width=220, height=50)
     })
     text_with_controls.update(controls1)
     text_with_controls.update({
         "vspace": Div(text="""<h1 style="margin-bottom:0.2cm"></h1>""")
     })
-    text_with_controls.update({
-        "simulation data": Div(text="""<h2>Dane do symulacji:</h2>""", width=220, height=50)
-    })
-    text_with_controls.update(controls2)
     text_with_controls.update({
         "vspace": Div(text="""<h1 style="margin-bottom:1cm"></h1>""")
     })
