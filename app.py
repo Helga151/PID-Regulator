@@ -33,7 +33,7 @@ def index():
         "ki": Slider(name="ki", title="ki - całkujący", value=0.08, start=0, end=2, step=0.01),
         "kd": Slider(name="kd", title="kd - różniczkujący", value=1, start=0, end=30, step=1)
     }
-    compile_button = {"compile_button": Button(label="Oblicz", button_type="primary", css_classes=['custom_button_bokeh'], name='compile_button')}
+    #compile_button = {"compile_button": Button(label="Oblicz", button_type="primary", css_classes=['custom_button_bokeh'], name='compile_button')}
     save_button = {"save_button": Button(label="Zapisz do pliku", button_type="success", css_classes =['custom_button_bokeh'], name='save_button')}
     compare_button = {"compare_button": Button(label="Zapisz do porównania", button_type="primary", css_classes =['custom_button_bokeh'])}
     hide_button = {"hide_button": Button(label="Ukryj", button_type="warning", css_classes =['custom_button_bokeh'])}
@@ -56,6 +56,8 @@ def index():
     comp_source1 = ColumnDataSource()
     source2 = ColumnDataSource()
     comp_source2 = ColumnDataSource()
+
+
     fig = figure(name="graph", plot_height=365, plot_width=500, tooltips=[("x", "@x"), ("y", "@y")],
                 background_fill_color='#20262B', border_fill_color='#15191C', outline_line_color='#E5E5E5')
     fig.line(x="x", y="y", source=source)
@@ -189,10 +191,10 @@ def index():
     callback_code = '\n'.join([str(line) for line in file])
     callback = CustomJS(args=dict(source=[source, source1, source2, comp_source1], controls=controls), code=callback_code)
 
-    #for single_control in controls_array:
-    #    single_control.js_on_change('value', callback)
+    for single_control in controls_array:
+        single_control.js_on_change('value', callback)
 
-    compile_button['compile_button'].js_on_click(callback)
+    #compile_button['compile_button'].js_on_click(callback)
     #endregion
 
 
@@ -226,10 +228,10 @@ def index():
     text_with_controls2.update({
         "vspace2": Div(text="""<h1 style="margin-bottom:0.52cm"></h1>""")
     })
-    text_with_controls2.update(compile_button)
+    #text_with_controls2.update(compile_button)
     text_with_controls2.update(save_button)
-    text_with_controls2.update(compare_button)
-    text_with_controls2.update(hide_button)
+    #text_with_controls2.update(compare_button)
+    #text_with_controls2.update(hide_button)
     text_with_controls2.update(load_select)
     text_with_controls2.update(delete_select)
     controls_array2 = text_with_controls2.values()
