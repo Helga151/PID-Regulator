@@ -19,4 +19,7 @@ Instalacja dependencies projektu:
 ```
 pip install -r deps
 ```
-
+## Autorzy
+- Olga Gerlich (148088)
+- Ivan Haidov (150228)
+- Paweł Marczewski (148099)
