@@ -44,9 +44,9 @@ vY_pilki.push(vY_pilki_pocz);
 var pozY_bramki = []; //aktualna pozycja bramki
 pozY_bramki.push(pozY_bramki_pocz);
 //pozycja piłki X i Y
-var pozX_pilki = new Array(czas);
+var pozX_pilki = new Array(czas + 1);
 pozX_pilki[0] = 0;
-var pozY_pilki = new Array(czas); 
+var pozY_pilki = new Array(czas + 1); 
 pozY_pilki[0] = pozY_pocz;
 //console.log({pozX_pilki, pozY_pilki});
 
@@ -59,18 +59,22 @@ function Wyznaczenie_pozycjiY_bramki(x1, y1, x2, y2, x3, y3) {
     var c = y1 - a* x1*x1 - b*x1;
     //console.log({a, b, c});
     //return a*pozX_bramki*pozX_bramki + b*pozX_bramki + c;
-    var hight=a*pozX_bramki*pozX_bramki + b*pozX_bramki + c;
-    if (hight>0) return hight;
+    var wysokosc = a*pozX_bramki*pozX_bramki + b*pozX_bramki + c;
+    //console.log({wysokosc});
+    if (wysokosc > 0) return wysokosc;
     else {
-        var delta=b*b-4*a*c
+        var delta = b*b-4*a*c;
         if (delta < 0){
-            console.log("error");
-            return hight;
+            console.log("ujemna delta");
+            return wysokosc;
         }
-        var xz=(-b-Math.sqrt(delta)/(2*a));
-        if (xz<x3) {
-            console.log("error");
-            return hight;
+        var xz1 = (-b-Math.sqrt(delta))/(2*a); //miejsce zerowe 1
+        var xz2 = (-b+Math.sqrt(delta))/(2*a); //miejsce zerowe 2
+        var xz = Math.max(xz1, xz2);
+        if (xz < x3) {
+            console.log("miejsce zerowe po lewej");
+            //console.log({xz1, xz2, x3});
+            return wysokosc;
         }
     }
 return  Wyznaczenie_pozycjiY_bramki(xz, 0, x3+2*(xz-x3), y3, x2+2*(xz-x2), y2);
@@ -84,7 +88,7 @@ for(var i=1;i<=czas;i++)
     var pilkinewV = (vY_pilki[i - 1] - g / f);
     var pilkinewpozY = (pozY_pilki[i - 1] + pilkinewV / f);
     //console.log({pilkinewpozY});
-    if (pilkinewpozY <= 0){
+    if (pilkinewpozY <= 0 && pilkinewV <= 0){
         console.log("<= 0");
         pilkinewpozY = pilkinewpozY * (-1);//pozycja piłki w osi Y
         pilkinewV = pilkinewV * (-1); //przeciwna liczba
@@ -98,6 +102,7 @@ for(var i=1;i<=czas;i++)
     if(i >= 3 && odbito == 0) {
         let mid = Math.floor((oid+i)/2);
         doc_pozY_bramki = Wyznaczenie_pozycjiY_bramki(pozX_pilki[oid], pozY_pilki[oid], pozX_pilki[mid], pozY_pilki[mid], pozX_pilki[i], pozY_pilki[i]);
+        //console.log({doc_pozY_bramki});
     }
     else if (odbito > 0){
         odbito--;
