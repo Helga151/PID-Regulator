@@ -27,11 +27,11 @@ def index():
         "pozY_pocz": Slider(name="pozY_pocz", title="pozycja początkowa Y piłki", value=1, start=0, end=3.5, step=0.5)
     }
     controls3 = {
-        "k": Slider(title="k", value=1, start=0, end=3, step=0.01),
-        "kp": Slider(title="kp", value=0.23, start=0, end=1, step=0.01),
-        "kd": Slider(title="kd", value=1, start=0, end=30, step=1),
-        "ki": Slider(title="ki", value=0.08, start=0, end=2, step=0.01),
-        "KT": Slider(title="KT", value=15, start=1, end=30, step=0.5)
+        "k": Slider(name="k", title="globalna zmienna regulatora", value=1, start=0, end=3, step=0.01),
+        "KT": Slider(name="KT", title="regulator zadawanego przyspieszenia", value=15, start=1, end=30, step=0.5),
+        "kp": Slider(name="kp", title="kp - proporcjonalny", value=0.23, start=0, end=1, step=0.01),
+        "ki": Slider(name="ki", title="ki - całkujący", value=0.08, start=0, end=2, step=0.01),
+        "kd": Slider(name="kd", title="kd - różniczkujący", value=1, start=0, end=30, step=1)
     }
     compile_button = {"compile_button": Button(label="Oblicz", button_type="primary", css_classes=['custom_button_bokeh'], name='compile_button')}
     save_button = {"save_button": Button(label="Zapisz do pliku", button_type="success", css_classes =['custom_button_bokeh'], name='save_button')}
@@ -116,6 +116,11 @@ def index():
             var pozX_bramki = Bokeh.documents[0].get_model_by_name('pozX_bramki');
             var pozY_bramki_pocz = Bokeh.documents[0].get_model_by_name('pozY_bramki_pocz');
             var pozY_pocz = Bokeh.documents[0].get_model_by_name('pozY_pocz');
+            var k = Bokeh.documents[0].get_model_by_name('k');
+            var KT = Bokeh.documents[0].get_model_by_name('KT');
+            var kp = Bokeh.documents[0].get_model_by_name('kp');
+            var ki = Bokeh.documents[0].get_model_by_name('ki');
+            var kd = Bokeh.documents[0].get_model_by_name('kd');
             var data = {
                 'amax': amax.value,
                 'aham': aham.value,
@@ -123,7 +128,12 @@ def index():
                 'Vy': Vy.value,
                 'pozX_bramki': pozX_bramki.value,
                 'pozY_bramki_pocz': pozY_bramki_pocz.value,
-                'pozY_pocz': pozY_pocz.value
+                'pozY_pocz': pozY_pocz.value,
+                'k': k.value,
+                'KT': KT.value,
+                'kp': kp.value,
+                'ki': ki.value,
+                'kd': kd.value
             };
             var czas = `${date} ${time}`;
             localStorage.setItem(czas, JSON.stringify(data));
@@ -152,6 +162,16 @@ def index():
             pozY_bramki_pocz.value = data.pozY_bramki_pocz;
             var pozY_pocz = Bokeh.documents[0].get_model_by_name('pozY_pocz');
             pozY_pocz.value = data.pozY_pocz;
+            var k = Bokeh.documents[0].get_model_by_name('k');
+            k.value = data.k;
+            var KT = Bokeh.documents[0].get_model_by_name('KT');
+            KT.value = data.KT;
+            var kp = Bokeh.documents[0].get_model_by_name('kp');
+            kp.value = data.kp;
+            var ki = Bokeh.documents[0].get_model_by_name('ki');
+            ki.value = data.ki;
+            var kd = Bokeh.documents[0].get_model_by_name('kd');
+            kd.value = data.kd;
         });
     """))
     #zawsze jeden zapis będzie musiał zostać
